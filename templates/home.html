@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,77 +7,287 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>FWI Prediction</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 15px;
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.2s ease;
+            background: #f9fafb;
+        }
+
+        .form-group input:focus {
+            border-color: #2563eb;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .form-group input::placeholder {
+            color: #9ca3af;
+        }
+
+        .button-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 9px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            text-align: center;
+        }
+
+        .result h2 {
+            font-size: 20px;
+            color: #1e40af;
+            font-weight: 600;
+        }
+
+        /* Mobile responsive design */
+        @media (max-width: 650px) {
+
+            body {
+                padding: 15px;
+                align-items: flex-start;
+            }
+
+            .container {
+                padding: 25px 20px;
+                margin-top: 20px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .result h2 {
+                font-size: 17px;
+            }
+        }
+
+        /* Small mobile screens */
+        @media (max-width: 400px) {
+
+            .container {
+                padding: 22px 16px;
+            }
+
+            .header h1 {
+                font-size: 25px;
+            }
+
+            .form-group input {
+                padding: 12px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>FWI Prediction</h1>
+    <div class="container">
 
-    <!-- Form for taking input from the user -->
-    <form action="{{ url_for('predict_datapoint') }}" method="post">
+        <div class="header">
+            <h1>FWI Prediction</h1>
+            <p>Enter the required environmental parameters to predict the Fire Weather Index.</p>
+        </div>
 
-        <input type="text"
-               name="Temperature"
-               placeholder="Temperature"
-               required>
-        <br>
+        <!-- Form for taking input from the user -->
+        <form action="{{ url_for('predict_datapoint') }}" method="post">
 
-        <input type="text"
-               name="RH"
-               placeholder="RH"
-               required>
-        <br>
+            <div class="form-grid">
 
-        <input type="text"
-               name="Ws"
-               placeholder="Ws"
-               required>
-        <br>
+                <div class="form-group">
+                    <label for="Temperature">Temperature</label>
+                    <input type="text"
+                           id="Temperature"
+                           name="Temperature"
+                           placeholder="Enter temperature"
+                           required>
+                </div>
 
-        <input type="text"
-               name="Rain"
-               placeholder="Rain"
-               required>
-        <br>
+                <div class="form-group">
+                    <label for="RH">Relative Humidity (RH)</label>
+                    <input type="text"
+                           id="RH"
+                           name="RH"
+                           placeholder="Enter RH"
+                           required>
+                </div>
 
-        <input type="text"
-               name="FFMC"
-               placeholder="FFMC"
-               required>
-        <br>
+                <div class="form-group">
+                    <label for="Ws">Wind Speed (Ws)</label>
+                    <input type="text"
+                           id="Ws"
+                           name="Ws"
+                           placeholder="Enter wind speed"
+                           required>
+                </div>
 
-        <input type="text"
-               name="DMC"
-               placeholder="DMC"
-               required>
-        <br>
+                <div class="form-group">
+                    <label for="Rain">Rain</label>
+                    <input type="text"
+                           id="Rain"
+                           name="Rain"
+                           placeholder="Enter rainfall"
+                           required>
+                </div>
 
-        <input type="text"
-               name="ISI"
-               placeholder="ISI"
-               required>
-        <br>
+                <div class="form-group">
+                    <label for="FFMC">FFMC</label>
+                    <input type="text"
+                           id="FFMC"
+                           name="FFMC"
+                           placeholder="Enter FFMC value"
+                           required>
+                </div>
 
-        <input type="text"
-               name="Classes"
-               placeholder="Classes"
-               required>
-        <br>
+                <div class="form-group">
+                    <label for="DMC">DMC</label>
+                    <input type="text"
+                           id="DMC"
+                           name="DMC"
+                           placeholder="Enter DMC value"
+                           required>
+                </div>
 
-        <input type="text"
-               name="Region"
-               placeholder="Region"
-               required>
-        <br><br>
+                <div class="form-group">
+                    <label for="ISI">ISI</label>
+                    <input type="text"
+                           id="ISI"
+                           name="ISI"
+                           placeholder="Enter ISI value"
+                           required>
+                </div>
 
-        <button type="submit">Predict</button>
+                <div class="form-group">
+                    <label for="Classes">Classes</label>
+                    <input type="text"
+                           id="Classes"
+                           name="Classes"
+                           placeholder="Enter class"
+                           required>
+                </div>
 
-    </form>
+                <div class="form-group">
+                    <label for="Region">Region</label>
+                    <input type="text"
+                           id="Region"
+                           name="Region"
+                           placeholder="Enter region"
+                           required>
+                </div>
 
-    <h2>
-        THE FWI prediction is {{ result }}
-    </h2>
+            </div>
+
+            <div class="button-container">
+                <button type="submit">Predict FWI</button>
+            </div>
+
+        </form>
+
+        <div class="result">
+            <h2>FWI Prediction: {{ result }}</h2>
+        </div>
+
+    </div>
 
 </body>
 
 </html>
+```
